@@ -37,6 +37,12 @@ class Money private (private[money] val amount: BigDecimal, private[money] val c
   def times(factor: BigDecimal): Money =
     adjustBy(amount.*(factor), currency)
 
+  def divide(divisor: BigDecimal, roundingMode: BigDecimal.RoundingMode.Value): Money = {
+    val newAmount = amount.bigDecimal.divide(divisor.bigDecimal, roundingMode.id)
+    new Money(newAmount, currency)
+  }
+
+
   override def compare(that: Money): Int =
     amount.compare(that.amount)
 
