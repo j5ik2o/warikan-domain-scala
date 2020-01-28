@@ -1,2 +1,14 @@
+.DS_Store
+.crentails
+
 *.class
 *.log
+
+.classpath
+.settings
+
+*.iml
+.idea/
+
+target/
+project/target/
