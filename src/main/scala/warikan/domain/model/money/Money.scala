@@ -11,6 +11,8 @@ class Money private (private[money] val amount: BigDecimal, private[money] val c
     extends Ordered[Money] {
   import Money._
 
+
+
   private def hasSameCurrencyAs(arg: Money): Boolean =
     arg.currency == currency
 
@@ -46,6 +48,7 @@ class Money private (private[money] val amount: BigDecimal, private[money] val c
   override def compare(that: Money): Int =
     amount.compare(that.amount)
 
+  override def toString = s"Money($amount, $currency)"
 }
 
 object Money {
