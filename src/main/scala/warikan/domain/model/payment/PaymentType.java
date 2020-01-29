@@ -1,4 +1,4 @@
-package warikan.domain.model;
+package warikan.domain.model.payment;
 
 public enum PaymentType {
     LARGE,

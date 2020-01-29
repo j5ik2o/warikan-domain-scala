@@ -1,5 +1,10 @@
 package warikan.domain.model
 
+import java.net.http.WebSocket
+
+import warikan.domain.model.amount.{BillingAmount, PartyPaymentTypeRatios, PaymentAmount, PaymentBaseAmount, WeightedSum}
+import warikan.domain.model.member.Member
+
 object Members {
   val empty: Members = new Members(Seq.empty: _*)
 }
@@ -9,16 +14,19 @@ case class Members(values: Member*) {
 
   def combine(other: Members): Members = Members(values ++ other.values: _*)
 
-  def weightedSum(partyPaymentTypeRatioMap: PartyPaymentTypeRatioMap): Double = {
-    values.map { v =>
-      partyPaymentTypeRatioMap.getRatioFromType(v.paymentType).value
-    }.sum
+  private def weightedSum(partyPaymentTypeRatioMap: PartyPaymentTypeRatios): WeightedSum = {
+    values.foldLeft(WeightedSum.zero){ (weightedSum, member) =>
+      weightedSum.add(partyPaymentTypeRatioMap.paymentTypeRatio(member.paymentType))
+    }
   }
 
-  def memberPaymentAmountMap(paymentBaseAmount: PaymentBaseAmount, partyPaymentTypeRatioMap: PartyPaymentTypeRatioMap): MemberPaymentAmountMap = {
-    MemberPaymentAmountMap(values.map { v =>
-      v -> PaymentAmount(paymentBaseAmount.times(partyPaymentTypeRatioMap.getRatioFromType(v.paymentType)))
-    }.toMap)
+  def memberPaymentAmounts(billingAmount: BillingAmount, partyPaymentTypeRatioMap: PartyPaymentTypeRatios): MemberPaymentAmounts = {
+    val paymentBaseAmount = billingAmount.divide(weightedSum(partyPaymentTypeRatioMap))
+    val result = values.map { member =>
+      val ratio = partyPaymentTypeRatioMap.paymentTypeRatio(member.paymentType)
+      member -> paymentBaseAmount.times(ratio)
+    }.toMap
+    MemberPaymentAmounts(result)
   }
 
 }

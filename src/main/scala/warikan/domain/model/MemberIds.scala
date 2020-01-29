@@ -1,4 +1,5 @@
 package warikan.domain.model
 
-case class MemberId(value: Long)
+import warikan.domain.model.member.MemberId
+
 case class MemberIds(values: Seq[MemberId])

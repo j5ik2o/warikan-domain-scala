@@ -11,8 +11,6 @@ class Money private (private[money] val amount: BigDecimal, private[money] val c
     extends Ordered[Money] {
   import Money._
 
-
-
   private def hasSameCurrencyAs(arg: Money): Boolean =
     arg.currency == currency
 
@@ -44,11 +42,29 @@ class Money private (private[money] val amount: BigDecimal, private[money] val c
     new Money(newAmount, currency)
   }
 
+  def isPositive: Boolean = amount > 0
+
+  def isNegative: Boolean = !isPositive
 
   override def compare(that: Money): Int =
     amount.compare(that.amount)
 
   override def toString = s"Money($amount, $currency)"
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Money]
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Money =>
+      (that canEqual this) &&
+        amount == that.amount &&
+        currency == that.currency
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(amount, currency)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }
 
 object Money {
@@ -57,7 +73,7 @@ object Money {
   val JPY: Currency                     = Currency.getInstance("JPY")
   val USD: Currency                     = Currency.getInstance("USD")
 
-  def of(rawAmount: Int, currency: Currency): Money =
+  def apply(rawAmount: Int, currency: Currency): Money =
     new Money(rawAmount, currency)
 
   def zero(currency: Currency): Money =
