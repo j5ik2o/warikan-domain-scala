@@ -2,7 +2,7 @@ package warikan.domain.model.amount
 
 import warikan.domain.model.payment.PaymentType
 
-case class PartyPaymentTypeRatios(medium: PaymentTypeRatio, large: PaymentTypeRatio, small: PaymentTypeRatio) {
+case class PartyPaymentTypeRatios(small: PaymentTypeRatio, medium: PaymentTypeRatio, large: PaymentTypeRatio) {
   require(large >= medium)
   require(medium >= small)
 

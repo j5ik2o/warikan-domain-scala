@@ -3,10 +3,12 @@ package warikan.domain.model.amount
 import warikan.domain.model.money.Money
 
 case class BillingAmount(value: Money) {
-  require(value.isPositive)
+  require(!value.isNegative)
 
-  def divide(weightedSum: WeightedSum): PaymentBaseAmount = {
-    PaymentBaseAmount(value.divide(weightedSum.value, BigDecimal.RoundingMode.HALF_EVEN))
-  }
+  def subtract(totalAmount: PaymentTotalAmount): BillingAmount =
+    BillingAmount(value - totalAmount.value)
+
+  def divide(weightedSum: WeightedSum): PaymentBaseAmount =
+    PaymentBaseAmount(value.dividedBy(weightedSum.value, BigDecimal.RoundingMode.HALF_EVEN))
 
 }

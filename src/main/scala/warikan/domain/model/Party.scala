@@ -14,7 +14,7 @@ case class Party(name: PartyName, date: LocalDate, members: Members, partyPaymen
   def removeMembers(memberIds: MemberIds): Party =
     copy(members = members.removeMembers(memberIds))
 
-  def withPaymentTypeRatios(medium: PaymentTypeRatio, large: PaymentTypeRatio, small: PaymentTypeRatio): Party =
+  def withPaymentTypeRatios(large: PaymentTypeRatio, medium: PaymentTypeRatio, small: PaymentTypeRatio): Party =
     withPaymentTypeRatios(PartyPaymentTypeRatios(medium, large, small))
 
   def withPaymentTypeRatios(value: PartyPaymentTypeRatios): Party =

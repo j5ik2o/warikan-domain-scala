@@ -1,11 +1,11 @@
 package warikan.domain.model.amount
 
 object WeightedSum {
-  val zero = WeightedSum(0)
+  val zero: WeightedSum = WeightedSum(0)
 }
 
 case class WeightedSum(value: Double) {
-  require(value > 0)
+  require(value >= 0)
 
   def add(ratio: PaymentTypeRatio): WeightedSum = copy(value = value + ratio.value)
 
