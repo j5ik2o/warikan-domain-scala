@@ -19,6 +19,7 @@
 
 ## 実装言語
 
+- Scala 2.13以降
 - Java(Java 8以降)
 
 ※Git, Java, IDEなどは事前にインストール・設定しておいてください。
@@ -73,14 +74,8 @@ JDKを切り替えることができる[jabba](https://github.com/shyiko/jabba)�
 ## ドメインオブジェクトを実装する(達成=RECOMMENDED, 時間=30分)
 
 - 本プロジェクトをひな型プロジェクトとして利用する。各チームでフォークしてください。
-    - [Moneyクラス](src/main/java/warikan/domain/model/Money.scala)や[幹事区分](src/main/java/warikan/domain/model/members/SecretaryType.scala)を用意しています。お金の計算などに使ってください。
+    - [Moneyクラス](src/main/scala/warikan/domain/model/Money.scala)や[幹事区分](src/main/java/warikan/domain/model/members/SecretaryType.scala)を用意しています。お金の計算などに使ってください。
     - ライブラリの依存関係(使うのは任意)
-        - commons-lang
-            - Apache Commonsの言語拡張用ライブラリ。表明プログラミングをする際は`Validate`を使うとよいです。
-        - vavr
-            - Immutableな関数型コレクションライブラリ
-        - JSR305
-            - Nonnullアノテーションが使えます
 - 概念モデルを実装に反映する
     - 上記で決めた概念名を持つ、具体的な型(クラス or 列挙型 or インターフェイス)を定義する
         - 区分は列挙型で定義しましょう
@@ -92,10 +87,10 @@ JDKを切り替えることができる[jabba](https://github.com/shyiko/jabba)�
     - テストを書くか書かないかはチームごとに決めてください
 - ビルドとJIGの利用
     - `$ sbt compile`でビルドできます。
-    - `$ sbt jigReports`で[JIG](https://github.com/dddjava/jig)のレポートを出力できます。
-        - 区分値依存関係(build/jig/category-usage.svg)
-        - クラス依存関係(build/jig/business-rule-relation.svg)
-        - パッケージ依存関係(build/jig/package-relation-depth?.svg)
+    - `$ sbt ';clean;compile;jigReports'`で[JIG](https://github.com/dddjava/jig)のレポートを出力できます。
+        - 区分値依存関係(target/jig/category-usage.svg)
+        - クラス依存関係(target/jig/business-rule-relation.svg)
+        - パッケージ依存関係(target/jig/package-relation-depth?.svg)
 
 ## ドメインオブジェクトを改善する(達成=OPTIONAL, 時間=45分)
 
@@ -103,85 +98,11 @@ JDKを切り替えることができる[jabba](https://github.com/shyiko/jabba)�
     - 不変条件を表明する
         - 値の表明はできてはいけないことを表明する
         - 型の表明はできることだけを表明する
-        - メンバーの集合を決して空にできない場合。可能であれば(1)より(2)を選択する
-
-            ```java
-            public class Members {
-                private final List<Member> values;
-                // (1)値の制約。違反した場合は実行時例外がスローされる
-                public Members(List<Member> values) {
-                    Validate.notEmpty(values); // 違反すると例外スロー
-                    this.values = new ArrayList<>(values);
-                }
-                // (2)型の制約。例外はない。コンパイルできないだけ
-                public Members(Member head, Member... tail) {
-                    values = new ArrayList<>();
-                    values.add(head);
-                    values.addAll(Arrays.asList(tail));
-                }
-            }
-            ```
-
     - Tell Don't Ask(求めるな 命じよ)を厳守
         - ある処理をする際、その処理に必要な情報をオブジェクトから引き出さないで、情報を持ったオブジェクトに処理を命令すること
         - 内部データを計算しないでそのまま返すようなメソッド(Getter)は作らない
-        
-            ```java
-            // 好ましくない例) 相手のオブジェクトから内部データを求めている
-            var secretaries = members.values().stream().filter(Member::isSecretary).collect(Collectors.toList());
-            // 好ましい例) 相手のオブジェクトに命令してください。
-            var secretaries = members.secretaries();
-            ```
-            
-            ```java
-            // 好ましい例のMembersクラス
-            public final Members {
-                private final List<Member> values;
-                
-                public Members(Member head, Member... tail) {
-                    values = new ArrayList<>();
-                    values.add(head);
-                    values.addAll(Arrays.asList(tail));
-                }
-                
-                // 定義したとしてもドメインの計算文脈では利用しない(注意:I/O文脈では必要なることがある)
-                // public List<Member> values() {
-                //     return new ArrayList<>(values);
-                // }
-                
-                // Membersクラス内部で計算させる
-                public Optional<Members> secretaries() {
-                　　 var result = values.stream().filter(Member::isSecretary).collect(Collectors.toList())
-                    if (result.isEmpty()) {
-                      return Optional.empty();
-                    } else {
-                      return Optional.of(new Members(result));
-                    }
-                }
-            }
-            ```
-
     - 誤りやすく安全ではない可変クラスではなく、不変(Immutable)クラスを採用する
-    
-        ```java
-        // 可変クラス
-        public final Members {
-            private List<Member> values;
-            
-            // コンストラクタ省略
-            
-            // 可変メソッド
-            public Members add(Member other) {
-                // 可変リストなので相手に渡しても害がないように複製を作る
-                var currentMembers = new ArrayList<>(values);
-                currentMembers.add(other);
-                return new Members(currentMembers);
-            }
-        }
-        ```
-        
         - Javaのコレクションは可変コレクションしかないので、上記のような回りくどい実装になります。[vavr](https://github.com/vavr-io/vavr)の依存関係が入っているのでそちらの不変コレクションを利用してもよいです。
-
     - 依存関係はシンプルに
         - パッケージやクラスの依存の方向が相互にならないように工夫してみる
 
