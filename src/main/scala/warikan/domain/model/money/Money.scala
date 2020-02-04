@@ -3,7 +3,6 @@ package warikan.domain.model.money
 import java.util.{Currency, Locale}
 
 import scala.math.BigDecimal
-import scala.math.BigDecimal.RoundingMode
 
 /**
  * 金額を表すクラス。

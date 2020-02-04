@@ -1,8 +1,6 @@
 package warikan.domain.model
 
-import java.net.http.WebSocket
-
-import warikan.domain.model.amount.{BillingAmount, PartyPaymentTypeRatios, PaymentAmount, PaymentBaseAmount, WeightedSum}
+import warikan.domain.model.amount.{BillingAmount, PartyPaymentTypeRatios, WeightedSum}
 import warikan.domain.model.member.Member
 
 object Members {
