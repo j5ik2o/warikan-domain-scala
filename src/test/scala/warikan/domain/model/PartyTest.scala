@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 import org.scalatest.freespec.AnyFreeSpec
 import warikan.domain.model.amount.{BillingAmount, PaymentTypeRatio}
-import warikan.domain.model.member.{Member, MemberId, MemberName}
+import warikan.domain.model.member.{Member, MemberId, MemberName, Members}
 import warikan.domain.model.money.Money
 import warikan.domain.model.payment.PaymentType
 

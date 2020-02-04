@@ -2,7 +2,8 @@ package warikan.domain.model
 
 import java.time.LocalDate
 
-import warikan.domain.model.amount.{BillingAmount, PartyPaymentTypeRatios, PaymentTypeRatio}
+import warikan.domain.model.amount.{BillingAmount, PartyPaymentTypeRatios, PaymentTypeRatio, WeightedSum}
+import warikan.domain.model.member.{MemberIds, Members}
 
 case class PartyName(value: String)
 
@@ -21,8 +22,21 @@ case class Party(name: PartyName, date: LocalDate, members: Members, partyPaymen
     copy(partyPaymentTypeRatios = value)
 
   def warikan(billingAmount: BillingAmount): MemberPaymentAmounts =
-    members.memberPaymentAmounts(billingAmount, partyPaymentTypeRatios)
+    memberPaymentAmounts(billingAmount, partyPaymentTypeRatios)
 
+  private def weightedSum(partyPaymentTypeRatios: PartyPaymentTypeRatios): WeightedSum = {
+    val ratios = members.values.map(member => partyPaymentTypeRatios.paymentTypeRatio(member.paymentType))
+    WeightedSum.zero.add(ratios.head, ratios.tail: _*)
+  }
+
+  private def memberPaymentAmounts(billingAmount: BillingAmount, partyPaymentTypeRatios: PartyPaymentTypeRatios): MemberPaymentAmounts = {
+    val paymentBaseAmount = billingAmount.divide(weightedSum(partyPaymentTypeRatios))
+    val result = members.values.map { member =>
+      val ratio = partyPaymentTypeRatios.paymentTypeRatio(member.paymentType)
+      member -> paymentBaseAmount.times(ratio)
+    }.toMap
+    MemberPaymentAmounts(result)
+  }
 }
 
 object Party {
