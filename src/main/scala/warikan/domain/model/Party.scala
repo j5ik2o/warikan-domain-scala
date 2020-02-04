@@ -4,8 +4,14 @@ import java.time.LocalDate
 
 import warikan.domain.model.amount.{BillingAmount, PartyPaymentTypeRatios, PaymentTypeRatio}
 
+/**
+ * 飲み会名
+ */
 case class PartyName(value: String)
 
+/**
+ * 飲み会
+ */
 case class Party(name: PartyName, date: LocalDate, members: Members, partyPaymentTypeRatios: PartyPaymentTypeRatios) {
 
   def addMembers(other: Members): Party =

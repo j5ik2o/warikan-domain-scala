@@ -2,6 +2,9 @@ package warikan.domain.model.amount
 
 import warikan.domain.model.money.Money
 
+/**
+ * 請求金額
+ */
 case class BillingAmount(value: Money) {
   require(!value.isNegative)
 

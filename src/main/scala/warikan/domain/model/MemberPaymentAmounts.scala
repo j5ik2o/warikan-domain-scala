@@ -4,6 +4,9 @@ import warikan.domain.model.amount.{PaymentAmount, PaymentTotalAmount}
 import warikan.domain.model.member.{Member, MemberId}
 import warikan.domain.model.money.Money
 
+/**
+ * 参加者毎の支払金額のファーストクラスコレクション
+ */
 case class MemberPaymentAmounts(values: Map[Member, PaymentAmount]) {
 
   def paymentAmountBy(member: Member): Option[PaymentAmount] = values.get(member)
