@@ -1,6 +1,4 @@
-package warikan.domain.model
-
-import warikan.domain.model.member.MemberId
+package warikan.domain.model.member
 
 /**
  * 参加者IDのファーストクラスコレクション
