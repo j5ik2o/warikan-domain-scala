@@ -14,16 +14,16 @@ case class Members(values: Member*) {
 
   def combine(other: Members): Members = Members(values ++ other.values: _*)
 
-  private def weightedSum(partyPaymentTypeRatioMap: PartyPaymentTypeRatios): WeightedSum = {
+  private def weightedSum(partyPaymentTypeRatios: PartyPaymentTypeRatios): WeightedSum = {
     values.foldLeft(WeightedSum.zero){ (weightedSum, member) =>
-      weightedSum.add(partyPaymentTypeRatioMap.paymentTypeRatio(member.paymentType))
+      weightedSum.add(partyPaymentTypeRatios.paymentTypeRatio(member.paymentType))
     }
   }
 
-  def memberPaymentAmounts(billingAmount: BillingAmount, partyPaymentTypeRatioMap: PartyPaymentTypeRatios): MemberPaymentAmounts = {
-    val paymentBaseAmount = billingAmount.divide(weightedSum(partyPaymentTypeRatioMap))
+  def memberPaymentAmounts(billingAmount: BillingAmount, partyPaymentTypeRatios: PartyPaymentTypeRatios): MemberPaymentAmounts = {
+    val paymentBaseAmount = billingAmount.divide(weightedSum(partyPaymentTypeRatios))
     val result = values.map { member =>
-      val ratio = partyPaymentTypeRatioMap.paymentTypeRatio(member.paymentType)
+      val ratio = partyPaymentTypeRatios.paymentTypeRatio(member.paymentType)
       member -> paymentBaseAmount.times(ratio)
     }.toMap
     MemberPaymentAmounts(result)
