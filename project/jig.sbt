@@ -1,3 +1,3 @@
 resolvers += Resolver.jcenterRepo
 resolvers += Resolver.bintrayIvyRepo("yoshiyoshifujii", "sbt-plugins")
-addSbtPlugin("com.github.yoshiyoshifujii" % "sbt-jig" % "2020.1.3")
+addSbtPlugin("com.github.yoshiyoshifujii" % "sbt-jig" % "2020.4.3")
