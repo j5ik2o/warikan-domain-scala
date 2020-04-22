@@ -87,7 +87,7 @@ JDKを切り替えることができる[jabba](https://github.com/shyiko/jabba)�
     - テストを書くか書かないかはチームごとに決めてください
 - ビルドとJIGの利用
     - `$ sbt compile`でビルドできます。
-    - `$ sbt ';clean;compile;jigReports'`で[JIG](https://github.com/dddjava/jig)のレポートを出力できます。
+    - `$ sbt ';clean;jigReports'`で[JIG](https://github.com/dddjava/jig)のレポートを出力できます。
         - 区分値依存関係(target/jig/category-usage.svg)
         - クラス依存関係(target/jig/business-rule-relation.svg)
         - パッケージ依存関係(target/jig/package-relation-depth?.svg)
