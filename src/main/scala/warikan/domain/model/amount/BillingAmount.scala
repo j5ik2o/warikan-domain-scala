@@ -2,7 +2,12 @@ package warikan.domain.model.amount
 
 import warikan.domain.model.money.Money
 
-case class BillingAmount(value: Money) {
+/**
+  * 請求金額。
+  *
+  * @param value
+  */
+final case class BillingAmount(value: Money) {
   require(!value.isNegative)
 
   def subtract(totalAmount: PaymentTotalAmount): BillingAmount =

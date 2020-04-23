@@ -1,10 +1,18 @@
 package warikan.domain.model
 
-import warikan.domain.model.amount.{PaymentAmount, PaymentTotalAmount}
-import warikan.domain.model.member.{Member, MemberId}
+import warikan.domain.model.amount.{ PaymentAmount, PaymentTotalAmount }
+import warikan.domain.model.member.{ Member, MemberId }
 import warikan.domain.model.money.Money
 
-case class MemberPaymentAmounts(values: Map[Member, PaymentAmount]) {
+/**
+  * 割り勘。
+  *
+  * 参加者ごとの支払金額。
+  *
+  * @param values
+  */
+final case class Warikan(values: Map[Member, PaymentAmount]) {
+  require(values.nonEmpty)
 
   def paymentAmountBy(member: Member): Option[PaymentAmount] = values.get(member)
 
@@ -16,4 +24,3 @@ case class MemberPaymentAmounts(values: Map[Member, PaymentAmount]) {
     })
 
 }
-

@@ -5,9 +5,29 @@ import java.time.LocalDate
 import warikan.domain.model.amount.{ BillingAmount, PartyPaymentTypeRatios, PaymentTypeRatio, WeightedSum }
 import warikan.domain.model.member.{ MemberIds, Members }
 
-case class PartyName(value: String)
+/**
+  * 飲み会名。
+  *
+  * @param value
+  */
+final case class PartyName(value: String) {
+  require(value.nonEmpty)
+}
 
-case class Party(name: PartyName, date: LocalDate, members: Members, partyPaymentTypeRatios: PartyPaymentTypeRatios) {
+/**
+  * 飲み会。
+  *
+  * @param name
+  * @param date
+  * @param members
+  * @param partyPaymentTypeRatios
+  */
+final case class Party(
+    name: PartyName,
+    date: LocalDate,
+    members: Members,
+    partyPaymentTypeRatios: PartyPaymentTypeRatios
+) {
 
   def addMembers(other: Members): Party =
     copy(members = members.combine(other))
@@ -21,24 +41,24 @@ case class Party(name: PartyName, date: LocalDate, members: Members, partyPaymen
   def withPaymentTypeRatios(value: PartyPaymentTypeRatios): Party =
     copy(partyPaymentTypeRatios = value)
 
-  def warikan(billingAmount: BillingAmount): MemberPaymentAmounts =
-    memberPaymentAmounts(billingAmount, partyPaymentTypeRatios)
+  def warikan(billingAmount: BillingAmount): Warikan =
+    warikan(billingAmount, partyPaymentTypeRatios)
 
   private def weightedSum(partyPaymentTypeRatios: PartyPaymentTypeRatios): WeightedSum = {
     val ratios = members.values.map(member => partyPaymentTypeRatios.paymentTypeRatio(member.paymentType))
     WeightedSum.zero.add(ratios.head, ratios.tail: _*)
   }
 
-  private def memberPaymentAmounts(
+  private def warikan(
       billingAmount: BillingAmount,
       partyPaymentTypeRatios: PartyPaymentTypeRatios
-  ): MemberPaymentAmounts = {
+  ): Warikan = {
     val paymentBaseAmount = billingAmount.divide(weightedSum(partyPaymentTypeRatios))
     val result = members.values.map { member =>
       val ratio = partyPaymentTypeRatios.paymentTypeRatio(member.paymentType)
       member -> paymentBaseAmount.times(ratio)
     }.toMap
-    MemberPaymentAmounts(result)
+    Warikan(result)
   }
 }
 

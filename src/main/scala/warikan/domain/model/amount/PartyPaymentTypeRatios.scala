@@ -2,7 +2,14 @@ package warikan.domain.model.amount
 
 import warikan.domain.model.payment.PaymentType
 
-case class PartyPaymentTypeRatios(small: PaymentTypeRatio, medium: PaymentTypeRatio, large: PaymentTypeRatio) {
+/**
+  * 支払金額比重リスト。
+  *
+  * @param small
+  * @param medium
+  * @param large
+  */
+final case class PartyPaymentTypeRatios(small: PaymentTypeRatio, medium: PaymentTypeRatio, large: PaymentTypeRatio) {
   require(large >= medium)
   require(medium >= small)
 
@@ -12,6 +19,6 @@ case class PartyPaymentTypeRatios(small: PaymentTypeRatio, medium: PaymentTypeRa
 }
 
 object PartyPaymentTypeRatios {
-  val default: PartyPaymentTypeRatios = PartyPaymentTypeRatios(PaymentTypeRatio(1.0), PaymentTypeRatio(1.0), PaymentTypeRatio(1.0))
+  val default: PartyPaymentTypeRatios =
+    PartyPaymentTypeRatios(PaymentTypeRatio(1.0), PaymentTypeRatio(1.0), PaymentTypeRatio(1.0))
 }
-

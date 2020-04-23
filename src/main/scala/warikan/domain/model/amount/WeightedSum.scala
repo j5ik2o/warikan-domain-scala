@@ -4,7 +4,12 @@ object WeightedSum {
   val zero: WeightedSum = WeightedSum(0)
 }
 
-case class WeightedSum(value: Double) {
+/**
+  * 加重和。
+  *
+  * @param value
+  */
+final case class WeightedSum(value: Double) {
   require(value >= 0)
 
   def add(ratio: PaymentTypeRatio, ratios: PaymentTypeRatio*): WeightedSum =
@@ -13,4 +18,3 @@ case class WeightedSum(value: Double) {
   def combine(other: WeightedSum): WeightedSum =
     copy(value = value + other.value)
 }
-

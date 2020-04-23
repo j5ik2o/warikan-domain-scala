@@ -1,5 +1,10 @@
 package warikan.domain.model.member
 
-case class MemberName(value: String) {
+/**
+  * 参加者名。
+  *
+  * @param value
+  */
+final case class MemberName(value: String) {
   require(value.nonEmpty)
 }

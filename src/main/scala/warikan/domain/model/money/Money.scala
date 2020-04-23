@@ -13,7 +13,9 @@ import scala.math.BigDecimal
   * @param amount 量 [[scala.math.BigDecimal]]
   * @param currency 通貨単位 [[java.util.Currency]]
   */
-class Money(private val amount: BigDecimal, private val currency: Currency) extends Ordered[Money] with Serializable {
+final class Money(private val amount: BigDecimal, private val currency: Currency)
+    extends Ordered[Money]
+    with Serializable {
 
   require(
     amount.scale == currency.getDefaultFractionDigits,

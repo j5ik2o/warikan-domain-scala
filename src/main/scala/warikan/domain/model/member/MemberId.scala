@@ -1,3 +1,10 @@
 package warikan.domain.model.member
 
-case class MemberId(value: Long)
+/**
+  * 参加者ID。
+  *
+  * @param value
+  */
+final case class MemberId(value: Long) {
+  require(value > 0)
+}
