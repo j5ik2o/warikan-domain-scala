@@ -3,8 +3,8 @@ package warikan.domain.model
 import java.time.LocalDate
 
 import org.scalatest.freespec.AnyFreeSpec
-import warikan.domain.model.amount.{BillingAmount, PaymentTypeRatio}
-import warikan.domain.model.member.{Member, MemberId, MemberName, Members}
+import warikan.domain.model.amount.{ BillingAmount, PaymentTypeRatio }
+import warikan.domain.model.member.{ Member, MemberId, MemberName, Members }
 import warikan.domain.model.money.Money
 import warikan.domain.model.payment.PaymentType
 
@@ -27,7 +27,7 @@ class PartyTest extends AnyFreeSpec {
           medium = PaymentTypeRatio(1.0),
           large = PaymentTypeRatio(1.2)
         )
-      val billingAmount = BillingAmount(Money(30000, Money.JPY))
+      val billingAmount        = BillingAmount(Money(30000, Money.JPY))
       val memberPaymentAmounts = party.warikan(billingAmount)
 
       assert(memberPaymentAmounts.paymentAmountBy(MemberId(1L)).get.value == Money(9000, Money.JPY))
@@ -37,7 +37,7 @@ class PartyTest extends AnyFreeSpec {
       assert(memberPaymentAmounts.paymentAmountBy(MemberId(5L)).get.value == Money(2250, Money.JPY))
 
       val result = billingAmount subtract memberPaymentAmounts.totalAmount
-      println(result)
+      println("余り = " + result)
 
     }
   }

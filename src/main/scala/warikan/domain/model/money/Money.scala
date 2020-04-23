@@ -232,16 +232,6 @@ class Money(private val amount: BigDecimal, private val currency: Currency) exte
   lazy val negated: Money =
     Money(BigDecimal(amount.bigDecimal.negate), currency)
 
-  <<<<<<< HEAD
-//  /**
-//   * 指定した時間量に対する、この金額の割合を返す。
-//   *
-//   * @param duration 時間量
-//   * @return 割合
-//   */
-//  def per(duration: Duration): MoneyTimeRate =
-//    new MoneyTimeRate(this, duration)
-  =======
   //  /**
   //   * 指定した時間量に対する、この金額の割合を返す。
   //   *
@@ -250,7 +240,6 @@ class Money(private val amount: BigDecimal, private val currency: Currency) exte
   //   */
   //  def per(duration: Duration): MoneyTimeRate =
   //    new MoneyTimeRate(this, duration)
-  >>>>>>> origin / master
 
   /**
     * この金額に`other`を足した金額を返す。
