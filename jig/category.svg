@@ -1,0 +1,20 @@
+<svg width="104px" height="144px"
+ viewBox="0.00 0.00 104.00 144.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="graph0" class="graph" transform=" rotate(0) translate(4 111)">
+<title>区分図</title>
+<polygon fill="white" stroke="transparent" points="-4,33 -4,-111 100,-111 100,33 -4,33"/>
+<text text-anchor="middle" x="48" y="15.2" font-family="Times,serif" font-size="14.00">区分図</text>
+<!-- warikan.domain.model.payment.PaymentType -->
+<g id="node1" class="node">
+<title>warikan.domain.model.payment.PaymentType</title>
+<polygon fill="#eedd82" stroke="black" points="96.24,-107.14 0.24,-107.14 0.24,-0.14 96.24,-0.14 96.24,-107.14"/>
+<text text-anchor="start" x="20.24" y="-89.44" font-family="Times,serif" font-size="14.00">支払区分</text>
+<text text-anchor="start" x="9.85" y="-75.44" font-family="Times,serif" font-size="14.00">PaymentType</text>
+<polygon fill="none" stroke="black" points="8.24,-43.64 8.24,-63.64 88.24,-63.64 88.24,-43.64 8.24,-43.64"/>
+<text text-anchor="start" x="24.91" y="-49.44" font-family="Times,serif" font-size="14.00">LARGE</text>
+<polygon fill="none" stroke="black" points="8.24,-23.64 8.24,-43.64 88.24,-43.64 88.24,-23.64 8.24,-23.64"/>
+<text text-anchor="start" x="19.07" y="-29.44" font-family="Times,serif" font-size="14.00">MEDIUM</text>
+<polygon fill="none" stroke="black" points="8.24,-3.64 8.24,-23.64 88.24,-23.64 88.24,-3.64 8.24,-3.64"/>
+<text text-anchor="start" x="24.51" y="-9.44" font-family="Times,serif" font-size="14.00">SMALL</text>
+</g>
+</g>
+</svg>
