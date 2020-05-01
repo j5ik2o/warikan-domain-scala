@@ -74,7 +74,7 @@ JDKを切り替えることができる[jabba](https://github.com/shyiko/jabba)�
 ## ドメインオブジェクトを実装する(達成=RECOMMENDED, 時間=30分)
 
 - 本プロジェクトをひな型プロジェクトとして利用する。各チームでフォークしてください。
-    - [Moneyクラス](src/main/scala/warikan/domain/model/Money.scala)用意しています。お金の計算などに使ってください。
+    - [Moneyクラス](https://github.com/j5ik2o/warikan-domain-scala/blob/master/src/main/scala/warikan/domain/model/money/Money.scala)用意しています。お金の計算などに使ってください。
     - ライブラリの依存関係(使うのは任意)
 - 概念モデルを実装に反映する
     - 上記で決めた概念名を持つ、具体的な型(クラス or 列挙型 or インターフェイス)を定義する
