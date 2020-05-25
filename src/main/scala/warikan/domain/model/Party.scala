@@ -2,8 +2,8 @@ package warikan.domain.model
 
 import java.time.LocalDate
 
-import warikan.domain.model.amount.{ BillingAmount, PartyPaymentTypeRatios, PaymentTypeRatio, WeightedSum }
-import warikan.domain.model.member.{ MemberIds, Members }
+import warikan.domain.model.amount.{BillingAmount, PartyPaymentTypeRatios, PaymentRatio, WeightedSum}
+import warikan.domain.model.member.{Member, MemberIds, Members}
 
 /**
   * 飲み会名。
@@ -19,52 +19,63 @@ final case class PartyName(value: String) {
   *
   * @param name
   * @param date
-  * @param members
+  * @param membersOpt
   * @param partyPaymentTypeRatios
   */
 final case class Party(
     name: PartyName,
     date: LocalDate,
-    members: Members,
+    membersOpt: Option[Members],
     partyPaymentTypeRatios: PartyPaymentTypeRatios
 ) {
 
-  def addMembers(other: Members): Party =
-    copy(members = members.combine(other))
+  def withMembers(other: Members): Party =
+    copy(membersOpt = membersOpt.map(_.combine(other)).orElse(Some(other)))
 
-  def removeMembers(memberIds: MemberIds): Party =
-    copy(members = members.removeMembers(memberIds))
-
-  def withPaymentTypeRatios(large: PaymentTypeRatio, medium: PaymentTypeRatio, small: PaymentTypeRatio): Party =
-    withPaymentTypeRatios(PartyPaymentTypeRatios(small, medium, large))
+  def withPaymentTypeRatios(large: PaymentRatio, small: PaymentRatio): Party =
+    withPaymentTypeRatios(PartyPaymentTypeRatios(small, large))
 
   def withPaymentTypeRatios(value: PartyPaymentTypeRatios): Party =
     copy(partyPaymentTypeRatios = value)
 
-  def warikan(billingAmount: BillingAmount): Warikan =
-    warikan(billingAmount, partyPaymentTypeRatios)
+  def warikan(billingAmount: BillingAmount): Warikan = {
+    membersOpt match {
+      case None =>
+        throw new IllegalStateException()
+      case Some(members) =>
+        // 普通の支払金額 = 請求金額 / 加重和
+        val paymentBaseAmount = billingAmount.divide(weightedSum(partyPaymentTypeRatios))
+        // 参加者ごとの支払金額を計算
+        val result = members.paymentTypes.map{ case (member, paymentType) =>
+          // 支払区分から支払割合を取得する
+          val paymentRatio = partyPaymentTypeRatios.paymentTypeRatio(paymentType)
+          // 普通の支払金額に支払割合を掛ける
+          member -> paymentBaseAmount.times(paymentRatio)
+        }
+        Warikan(result)
+    }
+  }
 
+  // 加重和を求める
   private def weightedSum(partyPaymentTypeRatios: PartyPaymentTypeRatios): WeightedSum = {
-    val ratios = members.values.map(member => partyPaymentTypeRatios.paymentTypeRatio(member.paymentType))
-    WeightedSum.zero.add(ratios.head, ratios.tail: _*)
+    membersOpt match {
+      case None =>
+        throw new IllegalStateException()
+      case Some(members) =>
+        // 全参加者が持つ支払割合のコレクションを作る
+        val paymentRatios = members.map { member =>
+          partyPaymentTypeRatios.paymentTypeRatio(member.paymentType)
+        }
+        // 支払割合のコレクションから加重和を求る
+        WeightedSum.from(paymentRatios.head, paymentRatios.tail: _*)
+    }
   }
 
-  private def warikan(
-      billingAmount: BillingAmount,
-      partyPaymentTypeRatios: PartyPaymentTypeRatios
-  ): Warikan = {
-    val paymentBaseAmount = billingAmount.divide(weightedSum(partyPaymentTypeRatios))
-    val result = members.values.map { member =>
-      val ratio = partyPaymentTypeRatios.paymentTypeRatio(member.paymentType)
-      member -> paymentBaseAmount.times(ratio)
-    }.toMap
-    Warikan(result)
-  }
 }
 
 object Party {
 
   def apply(name: PartyName, date: LocalDate): Party =
-    new Party(name, date, Members.empty, PartyPaymentTypeRatios.default)
+    new Party(name, date, None, PartyPaymentTypeRatios.default)
 
 }

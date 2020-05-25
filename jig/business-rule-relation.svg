@@ -102,14 +102,14 @@
 </g>
 <!-- warikan.domain.model.amount.PaymentTypeRatio -->
 <g id="node7" class="node">
-<title>warikan.domain.model.amount.PaymentTypeRatio</title>
+<title>warikan.domain.model.amount.PaymentRatio</title>
 <polygon fill="#eedd82" stroke="black" points="264.61,-88 141.39,-88 141.39,-45 264.61,-45 264.61,-88"/>
 <text text-anchor="middle" x="203" y="-72.8" font-family="Times,serif" font-size="14.00">支払区分比重</text>
 <text text-anchor="middle" x="203" y="-51.8" font-family="Times,serif" font-size="14.00">PaymentTypeRatio</text>
 </g>
 <!-- warikan.domain.model.Party&#45;&gt;warikan.domain.model.amount.PaymentTypeRatio -->
 <g id="edge7" class="edge">
-<title>warikan.domain.model.Party&#45;&gt;warikan.domain.model.amount.PaymentTypeRatio</title>
+<title>warikan.domain.model.Party&#45;&gt;warikan.domain.model.amount.PaymentRatio</title>
 <path fill="none" stroke="black" d="M525.75,-381.88C520.59,-378.13 515.7,-373.7 512,-368.64 445.83,-278.13 523.77,-203.76 443,-126 419.11,-103 336.51,-86.44 274.84,-76.93"/>
 <polygon fill="black" stroke="black" points="275.16,-73.44 264.75,-75.41 274.12,-80.36 275.16,-73.44"/>
 </g>
@@ -243,7 +243,7 @@
 </g>
 <!-- warikan.domain.model.amount.PaymentAmount&#45;&gt;warikan.domain.model.amount.PaymentTypeRatio -->
 <g id="edge13" class="edge">
-<title>warikan.domain.model.amount.PaymentAmount&#45;&gt;warikan.domain.model.amount.PaymentTypeRatio</title>
+<title>warikan.domain.model.amount.PaymentAmount&#45;&gt;warikan.domain.model.amount.PaymentRatio</title>
 <path fill="none" stroke="black" d="M203,-134.58C203,-123.74 203,-110.28 203,-98.27"/>
 <polygon fill="black" stroke="black" points="206.5,-98.18 203,-88.18 199.5,-98.18 206.5,-98.18"/>
 </g>
@@ -255,7 +255,7 @@
 </g>
 <!-- warikan.domain.model.amount.PartyPaymentTypeRatios&#45;&gt;warikan.domain.model.amount.PaymentTypeRatio -->
 <g id="edge15" class="edge">
-<title>warikan.domain.model.amount.PartyPaymentTypeRatios&#45;&gt;warikan.domain.model.amount.PaymentTypeRatio</title>
+<title>warikan.domain.model.amount.PartyPaymentTypeRatios&#45;&gt;warikan.domain.model.amount.PaymentRatio</title>
 <path fill="none" stroke="black" d="M319.36,-134.8C297.91,-122.39 270.4,-106.48 247.52,-93.25"/>
 <polygon fill="black" stroke="black" points="249.09,-90.11 238.68,-88.13 245.58,-96.17 249.09,-90.11"/>
 </g>
@@ -297,7 +297,7 @@
 </g>
 <!-- warikan.domain.model.amount.PaymentBaseAmount&#45;&gt;warikan.domain.model.amount.PaymentTypeRatio -->
 <g id="edge22" class="edge">
-<title>warikan.domain.model.amount.PaymentBaseAmount&#45;&gt;warikan.domain.model.amount.PaymentTypeRatio</title>
+<title>warikan.domain.model.amount.PaymentBaseAmount&#45;&gt;warikan.domain.model.amount.PaymentRatio</title>
 <path fill="none" stroke="black" d="M109.11,-219.11C115.74,-192.25 129.09,-141.65 139,-126 146.32,-114.45 156.5,-103.73 166.6,-94.7"/>
 <polygon fill="black" stroke="black" points="168.93,-97.31 174.25,-88.15 164.38,-92 168.93,-97.31"/>
 </g>
@@ -315,7 +315,7 @@
 </g>
 <!-- warikan.domain.model.amount.WeightedSum&#45;&gt;warikan.domain.model.amount.PaymentTypeRatio -->
 <g id="edge25" class="edge">
-<title>warikan.domain.model.amount.WeightedSum&#45;&gt;warikan.domain.model.amount.PaymentTypeRatio</title>
+<title>warikan.domain.model.amount.WeightedSum&#45;&gt;warikan.domain.model.amount.PaymentRatio</title>
 <path fill="none" stroke="black" d="M95.82,-134.8C115.34,-122.54 140.29,-106.88 161.21,-93.74"/>
 <polygon fill="black" stroke="black" points="163.29,-96.57 169.9,-88.29 159.57,-90.64 163.29,-96.57"/>
 </g>

@@ -6,19 +6,17 @@ import warikan.domain.model.payment.PaymentType
   * 支払金額比重リスト。
   *
   * @param small
-  * @param medium
   * @param large
   */
-final case class PartyPaymentTypeRatios(small: PaymentTypeRatio, medium: PaymentTypeRatio, large: PaymentTypeRatio) {
-  require(large >= medium)
-  require(medium >= small)
+final case class PartyPaymentTypeRatios(small: PaymentRatio,  large: PaymentRatio) {
+  require(large >= small)
 
-  private lazy val values = Map(PaymentType.LARGE -> large, PaymentType.MEDIUM -> medium, PaymentType.SMALL -> small)
+  private val values = Map(PaymentType.Large -> large, PaymentType.Medium -> PaymentRatio(1), PaymentType.Small -> small)
 
-  def paymentTypeRatio(t: PaymentType): PaymentTypeRatio = values(t)
+  def paymentTypeRatio(t: PaymentType.Value): PaymentRatio = values(t)
 }
 
 object PartyPaymentTypeRatios {
   val default: PartyPaymentTypeRatios =
-    PartyPaymentTypeRatios(PaymentTypeRatio(1.0), PaymentTypeRatio(1.0), PaymentTypeRatio(1.0))
+    PartyPaymentTypeRatios(small = PaymentRatio(0.8), large = PaymentRatio(1.2))
 }

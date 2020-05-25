@@ -9,4 +9,4 @@ import warikan.domain.model.payment.PaymentType
   * @param name
   * @param paymentType
   */
-final case class Member(id: MemberId, name: MemberName, paymentType: PaymentType)
+final case class Member(id: MemberId, name: MemberName, paymentType: PaymentType.Value)

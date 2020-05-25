@@ -10,7 +10,7 @@ import warikan.domain.model.money.Money
 final case class PaymentAmount(value: Money) {
   require(value.isPositive)
 
-  def times(factor: PaymentTypeRatio): Money =
-    value.times(factor.value)
+  def times(factor: PaymentRatio): PaymentAmount =
+    copy(value.times(factor.value))
 
 }

@@ -13,7 +13,7 @@ final case class BillingAmount(value: Money) {
   def subtract(totalAmount: PaymentTotalAmount): BillingAmount =
     BillingAmount(value - totalAmount.value)
 
-  def divide(weightedSum: WeightedSum): PaymentBaseAmount =
-    PaymentBaseAmount(value.dividedBy(weightedSum.value, BigDecimal.RoundingMode.HALF_EVEN))
+  def divide(weightedSum: WeightedSum): PaymentAmount =
+    PaymentAmount(value.dividedBy(weightedSum.value, BigDecimal.RoundingMode.HALF_EVEN))
 
 }
