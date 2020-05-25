@@ -1,5 +1,12 @@
 # 飲み会の割り勘ドメイン
 
+## 実装例
+
+一例として、以下のブランチを参考にしてください。
+
+[feature/impl-1](https://github.com/j5ik2o/warikan-domain-scala/tree/feature/impl-1)
+
+
 ## 成果物
 
 - チームで設計に合意すること
