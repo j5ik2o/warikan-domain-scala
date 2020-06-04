@@ -2,7 +2,7 @@
 
 ## 実装例
 
-一例として、以下のブランチを参考にしてください。
+一例として、以下のブランチを参考にしてください。最初から答えを見ないことをお勧めします。
 
 [feature/impl-1](https://github.com/j5ik2o/warikan-domain-scala/tree/feature/impl-1)
 
