@@ -22,9 +22,9 @@ class NomikaiSpec extends AnyFreeSpec {
       )
 
       val paymentMap = PaymentMap(Map(
-        PaymentSection.多め -> new PaymentRatio(1.2),
-        PaymentSection.普通 -> new PaymentRatio(1.0),
-        PaymentSection.少なめ -> new PaymentRatio(0.8),
+        PaymentSection.多め -> PaymentRatio(1.2),
+        PaymentSection.普通 -> PaymentRatio(1.0),
+        PaymentSection.少なめ -> PaymentRatio(0.8),
       ))
 
       bounenkai.warikan(paymentMap)

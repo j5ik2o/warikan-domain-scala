@@ -1,5 +1,5 @@
 package warikan.domain.model
 
-class PaymentRatio(decimal: BigDecimal) {
+case class PaymentRatio(decimal: BigDecimal) {
 
 }
