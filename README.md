@@ -1,5 +1,7 @@
 # 飲み会の割り勘ドメイン(Scala版)
 
+[Rust版はこちら](https://github.com/j5ik2o/warikan-domain-rust)
+
 ## 実装例
 
 一例として、以下のブランチを参考にしてください。
